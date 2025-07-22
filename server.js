@@ -10,6 +10,7 @@ mongoose.connect(process.env.MONGODB_URL)
 
 const app = express();
 app.use(express.json());
+app.use(cors ()),
 app.use(express.urlencoded({ extended: true }));
 const booksSchema = new mongoose.Schema({
     id: String,
@@ -34,12 +35,11 @@ app.get('/books', async (req, res) => {
 });
 
 
-
 //post
 app.post('/books', async (req, res) => {
   try {
-    const { id, title, pages, author } = req.body;
-    const newBook = new Book({ id, title, pages, author });
+    const { title, pages, author } = req.body;
+    const newBook = new Book({title, pages, author });
     await newBook.save();
     res.json("New book created",newBook);
     
